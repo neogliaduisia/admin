@@ -32,13 +32,28 @@
           <td>{{ item.lastName }}</td>
           <td>{{ item.email }}</td>
           <td>
-            <v-btn small text color="primary" @click.stop="openModal(item.id)">
+            <v-btn
+              small
+              text
+              color="primary"
+              v-if="!removable"
+              @click.stop="openAddModal(item.id)"
+            >
               Add user to group
+            </v-btn>
+            <v-btn
+              small
+              text
+              color="primary"
+              v-if="removable"
+              @click.stop="openRemoveModal(item.id)"
+            >
+              Remove user from group
             </v-btn>
           </td>
         </router-link>
       </tbody>
-      <v-dialog v-model="dialog" max-width="550">
+      <v-dialog v-model="addDialog" max-width="550">
         <v-card>
           <v-card-title class="headline">
             Which group do you want to add the user to?
@@ -56,7 +71,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="grey darken-1" text @click="dialog = false">
+            <v-btn color="grey darken-1" text @click="addDialog = false">
               Close
             </v-btn>
             <v-btn color="green darken-1" text @click="addToGroup()">
@@ -65,41 +80,80 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+
+      <v-dialog v-model="removeDialog" max-width="400">
+        <v-card>
+          <v-form>
+            <v-card-text class="text">
+              Do you want to delete user from group?</v-card-text
+            >
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="grey darken-1" text @click="removeDialog = false">
+                Close
+              </v-btn>
+              <v-btn color="red darken-1" text @click="remove()">
+                Delete
+              </v-btn>
+            </v-card-actions>
+          </v-form>
+        </v-card>
+      </v-dialog>
     </template>
   </v-simple-table>
 </template>
 
 <script>
-import { mdiAccount } from "@mdi/js";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "users",
+  props: {
+    users: {
+      type: Array,
+      required: true,
+      default() {
+        return [];
+      },
+    },
+    removable: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
-      svgPath: mdiAccount,
-      dialog: false,
+      addDialog: false,
+      removeDialog: false,
       currentGroup: "",
       currentUser: "",
     };
   },
   methods: {
-    ...mapActions(["setUserToGroup"]),
-    openModal(userId) {
-      this.dialog = true;
+    openAddModal(userId) {
+      this.addDialog = true;
       this.currentUser = userId;
     },
     addToGroup() {
-      this.dialog = false;
-      this.setUserToGroup({
+      this.$emit("on-add", {
         userId: this.currentUser,
         groupId: this.currentGroup,
       });
-      this.currentGroup = "";
-      this.currentUser = "";
+      this.addDialog = false;
+    },
+    openRemoveModal(userId) {
+      this.removeDialog = true;
+      this.currentUser = userId;
+    },
+    remove() {
+      this.$emit("on-remove", {
+        userId: this.currentUser,
+        groupId: this.currentGroup,
+      });
+      this.removeDialog = false;
     },
   },
   computed: {
-    ...mapGetters(["users", "groups"]),
+    ...mapGetters(["groups"]),
   },
 };
 </script>
@@ -111,5 +165,14 @@ export default {
   .image {
     border-radius: 50%;
   }
+  td:hover {
+    cursor: pointer;
+  }
 }
+.text {
+    font-size: 20px;
+    text-align: start;
+    padding-left: 20px;
+    padding-top: 30px;
+  }
 </style>

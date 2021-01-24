@@ -41,7 +41,6 @@ const groupsModule = {
       commit("updateGroups", groupsCopy);
     },
     deleteUserFromGroup({state, commit}, data) {
-      console.log(data)
       const groupsCopy = [...state.groups];
       let group = groupsCopy.find(group => group.id == data.groupId);
       const userIndex = group.usersIds.indexOf(data.userId);
