@@ -1,12 +1,16 @@
 <template>
   <div>
-    <v-card class="card">
+    <v-card class="mx-auto card" outlined>
       <v-card-title> Group </v-card-title>
       <v-divider class="mx-4"></v-divider>
       <v-card-text>
         <v-list>
-          <v-list-item> Group name: {{ group.name }} </v-list-item>
-          <v-list-item> Members: {{ group.usersIds.length }} </v-list-item>
+          <v-list-item class="groupInfo">
+            Group name: {{ group.name }}
+          </v-list-item>
+          <v-list-item class="groupInfo">
+            Members: {{ group.usersIds.length }}
+          </v-list-item>
         </v-list>
       </v-card-text>
     </v-card>
@@ -35,27 +39,28 @@
             <td>{{ item.lastName }}</td>
             <td>{{ item.email }}</td>
             <td>
-              <v-btn small color="primary" @click="openModal(item.id)">
+              <v-btn small text color="primary" @click="openModal(item.id)">
                 Delete user from group
               </v-btn>
             </td>
           </tr>
         </tbody>
-        <v-dialog v-model="dialog" persistent max-width="290">
+        <v-dialog v-model="dialog" max-width="400">
           <v-card>
-            <v-card-title class="headline">
-              Do you want to delete user from group?
-            </v-card-title>
-            <v-card-text> </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="green darken-1" text @click="dialog = false">
-                Disagree
-              </v-btn>
-              <v-btn color="green darken-1" text @click="remove()">
-                Agree
-              </v-btn>
-            </v-card-actions>
+            <v-form>
+              <v-card-text class="text">
+                Do you want to delete user from group?</v-card-text
+              >
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="grey darken-1" text @click="dialog = false">
+                  Close
+                </v-btn>
+                <v-btn color="red darken-1" text @click="remove()">
+                  Delete
+                </v-btn>
+              </v-card-actions>
+            </v-form>
           </v-card>
         </v-dialog>
       </template>
@@ -102,13 +107,23 @@ export default {
 
 <style scoped lang='scss'>
 .card {
-    margin: 5% 10% 20px 10% !important;
+  margin: 5% 10% 20px 10% !important;
 }
 .table {
-    margin: 20px 10% 20px 10% !important;
-    border: 1px lightgrey solid;
-    .image {
-        border-radius: 50%;
-    }
+  margin: 20px 10% 20px 10% !important;
+  border: 1px lightgrey solid;
+  .image {
+    border-radius: 50%;
+  }
+}
+.text {
+  font-size: 20px;
+  text-align: start;
+  padding-left: 20px;
+  padding-top: 30px;
+}
+.groupInfo {
+  padding: 0px;
+  font-size: 16px;
 }
 </style>

@@ -1,6 +1,11 @@
 <template>
   <div>
-    <v-simple-table fixed-header max-height="400px" max-width="400px" class="table">
+    <v-simple-table
+      fixed-header
+      max-height="400px"
+      max-width="400px"
+      class="table"
+    >
       <template v-slot:default>
         <thead>
           <tr>
@@ -22,37 +27,44 @@
             <td>{{ item.name }}</td>
             <td>{{ item.usersIds.length }}</td>
             <td>
-              <v-btn small color="primary" @click.stop="openModal(item.id)">
+              <v-btn
+                small
+                text
+                color="primary"
+                @click.stop="openModal(item.id)"
+              >
                 Add user to group
               </v-btn>
             </td>
           </router-link>
         </tbody>
-        <v-dialog v-model="dialog" persistent max-width="290">
+        <v-dialog v-model="dialog" max-width="550">
           <v-card>
-            <v-card-title class="headline">
-              Use Google's location service?
-            </v-card-title>
-            <v-card-text>
-              <v-select
-                :items="users"
-                item-text="name"
-                v-model="currentUser"
-                item-value="id"
-                class="select"
-                dense
-              >
-              </v-select>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="green darken-1" text @click="dialog = false">
-                Disagree
-              </v-btn>
-              <v-btn color="green darken-1" text @click="addToGroup()">
-                Agree
-              </v-btn>
-            </v-card-actions>
+            <v-form>
+              <v-card-title class="headline">
+                Which user do you want to add to the group?
+              </v-card-title>
+              <v-card-text>
+                <v-select
+                  :items="users"
+                  item-text="name"
+                  v-model="currentUser"
+                  item-value="id"
+                  class="select"
+                  dense
+                >
+                </v-select>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="grey darken-1" text @click="dialog = false">
+                  Close
+                </v-btn>
+                <v-btn color="green darken-1" text @click="addToGroup()">
+                  Add
+                </v-btn>
+              </v-card-actions>
+            </v-form>
           </v-card>
         </v-dialog>
       </template>
@@ -68,7 +80,7 @@ export default {
     return {
       currentGroup: "",
       currentUser: "",
-      dialog: false
+      dialog: false,
     };
   },
   methods: {

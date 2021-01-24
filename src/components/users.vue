@@ -32,16 +32,16 @@
           <td>{{ item.lastName }}</td>
           <td>{{ item.email }}</td>
           <td>
-            <v-btn small color="primary" @click.stop="openModal(item.id)">
+            <v-btn small text color="primary" @click.stop="openModal(item.id)">
               Add user to group
             </v-btn>
           </td>
         </router-link>
       </tbody>
-      <v-dialog v-model="dialog" persistent max-width="290">
+      <v-dialog v-model="dialog" max-width="550">
         <v-card>
           <v-card-title class="headline">
-            Use Google's location service?
+            Which group do you want to add the user to?
           </v-card-title>
           <v-card-text>
             <v-select
@@ -56,11 +56,11 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="green darken-1" text @click="dialog = false">
-              Disagree
+            <v-btn color="grey darken-1" text @click="dialog = false">
+              Close
             </v-btn>
             <v-btn color="green darken-1" text @click="addToGroup()">
-              Agree
+              Add
             </v-btn>
           </v-card-actions>
         </v-card>
