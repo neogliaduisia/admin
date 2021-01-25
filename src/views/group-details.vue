@@ -23,13 +23,13 @@
 </template>
 
 <script>
-import usersTable from "../components/users-table";
+import UsersTable from "../components/users-table";
 import { mapGetters, mapActions } from "vuex";
 export default {
   name: "group-details",
   props: ["groupId"],
   components: {
-    usersTable,
+    UsersTable,
   },
   created() {
     this.getGroupData(this.groupId);

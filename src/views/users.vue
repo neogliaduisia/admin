@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import usersTable from "../components/users-table";
+import UsersTable from "../components/users-table";
 import { mapGetters, mapActions } from "vuex";
 export default {
   name: "users",
   components: {
-    usersTable,
+    UsersTable,
   },
   data() {
     return {};
