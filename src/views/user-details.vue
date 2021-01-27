@@ -22,7 +22,7 @@
       </v-list-item>
     </v-card>
     <groups-table
-      :groups="userGroups"
+      :items="userGroups"
       :removable="true"
       @on-remove="removeUser($event)"
     ></groups-table>

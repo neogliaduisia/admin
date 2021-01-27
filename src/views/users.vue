@@ -1,7 +1,7 @@
 <template>
   <div>
     <users-table
-      :users="users"
+      :items="users"
       :removable="false"
       @on-add="addToGroup($event)"
     ></users-table>

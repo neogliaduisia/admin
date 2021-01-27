@@ -15,7 +15,7 @@
       </v-card-text>
     </v-card>
     <users-table
-      :users="usersInGroup"
+      :items="usersInGroup"
       :removable="true"
       @on-remove="removeGroup($event)"
     ></users-table>

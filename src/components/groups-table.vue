@@ -15,7 +15,7 @@
       </thead>
       <tbody>
         <router-link
-          v-for="item in groups"
+          v-for="item in items"
           :key="item.name"
           :to="{
             name: 'group-details',
@@ -101,54 +101,11 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { tableMixin } from "../mixins/table-mixin";
 
 export default {
   name: "groups-table",
-  props: {
-    groups: {
-      type: Array,
-      required: true,
-      default() {
-        return [];
-      },
-    },
-    removable: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  data() {
-    return {
-      currentGroup: "",
-      currentUser: "",
-      addDialog: false,
-      removeDialog: false,
-    };
-  },
-  methods: {
-    openAddModal(groupId) {
-      this.addDialog = true;
-      this.currentGroup = groupId;
-    },
-    addToGroup() {
-      this.$emit("on-add", {
-        userId: this.currentUser,
-        groupId: this.currentGroup,
-      });
-      this.addDialog = false;
-    },
-    openRemoveModal(groupId) {
-      this.removeDialog = true;
-      this.currentGroup = groupId;
-    },
-    remove() {
-      this.$emit("on-remove", {
-        userId: this.currentUser,
-        groupId: this.currentGroup,
-      });
-      this.removeDialog = false;
-    },
-  },
+  mixins: [tableMixin],
   computed: {
     ...mapGetters(["users"]),
   },
